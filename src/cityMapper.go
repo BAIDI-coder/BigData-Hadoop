@@ -35,16 +35,18 @@ func eHandle(msg string) {
 }
 
 func scanLine() (string, error) {
-	var bits []byte
-	var ch byte
+	var words []rune
+	var word rune
 	var err error = nil
 	for {
-		_, err = fmt.Scanf("%c", &ch)
-		if err != nil || ch == '\n' {
+		_, err = fmt.Scanf("%c", &word)
+		if err != nil || word == '\n' {
 			break
 		}
-		bits = append(bits, ch)
+		words = append(words, word)
 	}
-	return string(bits), err
+	if err == io.EOF && len(words) > 0 {
+		err = nil
+	}
+	return string(words), err
 }
-
