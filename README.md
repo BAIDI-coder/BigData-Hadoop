@@ -19,13 +19,15 @@
 ```
 3. 文件结构
 ``` shell
-mapReducer/
-├── calAverage	//reducer
-├── cityMapper	//mapper
+mapReducer
+├── calAverage	/*reducer*/
+├── cityMapper	/*mapper*/
 ├── debug.sh
+├── input.txt	/*debug input*/
+├── output
 └── README.md
 
-0 directories, 4 files
+0 directories, 6 files
 ```
 ### Example
 - 修改权限
