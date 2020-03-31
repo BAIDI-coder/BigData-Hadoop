@@ -37,7 +37,7 @@ func main() {
 			curNum++
 		} else {
 			if curAmt != 0 {
-				fmt.Println(curKey + "\t" + strconv.FormatFloat(curAmt/float64(curNum), 'f', -1, 64))
+				fmt.Println(curKey + "," + strconv.FormatFloat(curAmt/float64(curNum), 'f', -1, 64))
 			}
 			curKey = Mapper[0]
 			curNum = 1
@@ -48,7 +48,7 @@ func main() {
 	if err != io.EOF {
 		eHandle("calAverage: something wrong")
 	} else {
-		fmt.Println(curKey + "\t" + strconv.FormatFloat(curAmt/float64(curNum), 'f', -1, 64))
+		fmt.Println(curKey + "," + strconv.FormatFloat(curAmt/float64(curNum), 'f', -1, 64))
 	}
 	return
 }

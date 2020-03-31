@@ -20,7 +20,7 @@ func main() {
 			break
 		} else {
 			pair = strings.Split(line, ",")
-			fmt.Println(pair[0] + "\t" + pair[1])
+			fmt.Println(pair[0] + "," + pair[1])
 		}
 	}
 	if err != nil && err != io.EOF {
