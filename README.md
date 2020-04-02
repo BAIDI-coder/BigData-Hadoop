@@ -61,6 +61,6 @@ mapred streaming \
 ``` shell
 hdfs dfs -cat output/*
 ```
-```
+
 ### Repository
 - https://github.com/BAIDI-coder/BigData-Hadoop
