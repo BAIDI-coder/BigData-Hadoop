@@ -43,3 +43,67 @@ func scanLine() (string, error) {
 	return string(words), err
 }
 ```
+### 2020.4.1 [log]
+#### Activity
+- hadoop集群搭建（两台虚拟机，一台运行NameNode，一台运行DataNode）
+``` shell
+[hadoop@localhost hadoop]$ hdfs dfsadmin -report
+2020-04-01 23:26:08,129 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Configured Capacity: 18238930944 (16.99 GB)
+Present Capacity: 11914702848 (11.10 GB)
+DFS Remaining: 11914698752 (11.10 GB)
+DFS Used: 4096 (4 KB)
+DFS Used%: 0.00%
+Replicated Blocks:
+	Under replicated blocks: 0
+	Blocks with corrupt replicas: 0
+	Missing blocks: 0
+	Missing blocks (with replication factor 1): 0
+	Low redundancy blocks with highest priority to recover: 0
+	Pending deletion blocks: 0
+Erasure Coded Block Groups: 
+	Low redundancy block groups: 0
+	Block groups with corrupt internal blocks: 0
+	Missing block groups: 0
+	Low redundancy blocks with highest priority to recover: 0
+	Pending deletion blocks: 0
+
+-------------------------------------------------
+Live datanodes (1):
+
+Name: 192.168.100.11:9866 (hadoop-worker.com)
+Hostname: hadoop-worker.com
+Decommission Status : Normal
+Configured Capacity: 18238930944 (16.99 GB)
+DFS Used: 4096 (4 KB)
+Non DFS Used: 6324228096 (5.89 GB)
+DFS Remaining: 11914698752 (11.10 GB)
+DFS Used%: 0.00%
+DFS Remaining%: 65.33%
+Configured Cache Capacity: 0 (0 B)
+Cache Used: 0 (0 B)
+Cache Remaining: 0 (0 B)
+Cache Used%: 100.00%
+Cache Remaining%: 0.00%
+Xceivers: 1
+Last contact: Wed Apr 01 23:26:09 CST 2020
+Last Block Report: Wed Apr 01 23:20:30 CST 2020
+Num of Blocks: 0
+```
+
+#### Traps
+- ssh对于.ssh内的文件有权限限制（不允许组有写权限等）
+- ssh登陆用户如果不指定则默认同名用户，因此要注意用户名问题（实验中将两台虚拟机运行hadoop的用户名设为相同也是处于这种考虑）
+
+### 2020.4.2 [log]
+### Activity
+- 用hadoop执行自己的mapred streaming job
+
+### Traps
+- 执行mapred streaming时显示connection refused
+	- solution: 虚拟网卡异常，重启恢复
+- 执行mapred streaming时抛出找不到class异常
+	- solution: 根据诊断信息发现mapred-site.xml文件没有配置相关value
+- map succeed but reduce failed
+	- solution: 将reducer暂时改为/usr/bin/cat，发现reduce input的key/value pair分隔符与脚本程序默认分隔符不一致
+	- solution: 添加 -D stream.reduce.input.separator=,

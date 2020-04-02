@@ -42,13 +42,25 @@ ls
 cat output
 ```
 - 使用样例(仅参考，实际文件路径依据情况而定)
+1. 上传input.txt到HDFS
 ``` shell
-hadoop jar /usr/local/hadoop/share/hadoop/tools/lib/hadoop-streaming-3.2.1.jar \
-  -D stream.map.output.field.separator=, \
-  -input ~/Desktop/input.txt \
-  -output ~/Desktop/output \
-  -mapper ~/cityMapper -file ~/cityMapper \
-  -reducer ~/calAverage -file ~/calAverage\
+hdfs dfs -put ./input.txt input
+```
+2. 执行如下streaming指令
+``` shell
+mapred streaming \
+-D stream.map.output.field.separator=, \
+-D stream.reduce.input.field.separator=, \
+-files cityMapper,calAverage \
+-input /user/hadoop/input/input.txt \
+-output output \
+-mapper cityMapper \
+-reducer calAverage
+```
+3. 查看结果
+``` shell
+hdfs dfs -cat output/*
+```
 ```
 ### Repository
 - https://github.com/BAIDI-coder/BigData-Hadoop
